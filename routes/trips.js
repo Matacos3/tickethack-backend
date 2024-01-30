@@ -1,19 +1,17 @@
 var express = require('express');
 var router = express.Router();
 
-const User = require("../models/trips") 
+const Trip = require("../models/trips") 
 
 
 
-router.get('/trips',(req,res)=>{
-    trips.find().then(allTrips =>
+router.get('/',(req,res)=>{
+    Trip.find({arrival : req.body.arrival, departure : req.body.departure, date : req.body.date}).then(allTrips =>
     res.json({result: true, allTrips})
-    )}
-  )
+    )
+})
 
-  router.get('/trips'),(req,res)=>{
-    trips.find(req.body.departure)
+
   
-  }
 
-  module.exports = router;
+module.exports = router;
