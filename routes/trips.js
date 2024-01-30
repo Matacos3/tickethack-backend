@@ -6,8 +6,20 @@ const Trip = require("../models/trips")
 
 
 router.get('/',(req,res)=>{
-    Trip.find({arrival : req.body.arrival, departure : req.body.departure, date : req.body.date}).then(allTrips =>
-    res.json({result: true, allTrips})
+
+  console.log(req.body.date)
+    Trip.find({
+    arrival : {$regex : new RegExp(req.body.arrival, "i")}, 
+    departure : {$regex : new RegExp(req.body.departure,"i")}, 
+    date : {$lte:,$gte : }})
+    .then(allTrips =>{
+    console.log(allTrips)
+    if(allTrips.length!=0){
+      res.json({result: true, allTrips})
+
+    } else{
+      res.json({result : false, error : "No such trips found"})
+    }}
     )
 })
 
