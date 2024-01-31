@@ -3,6 +3,8 @@ const Cart = require('../models/cart');
 const Trip = require("../models/trips")
 var router = express.Router();
 
+
+//ajouter un voyage dans le panier
 router.get('/:id', (req,res)=>{
    //vérifier si le voyage est déjà dans le panier ou pas 
 
@@ -25,34 +27,40 @@ router.get('/:id', (req,res)=>{
     
 });
 
-// router.get("/", (req, res)=>{
-//     Cart.find().then(data =>{
-//         res.json({result : data})
-//     })
-// })
-// router.get('/cart', (req,res) =>{
-//     res.json ({tripsList : Trip});
-// });
+//afficher tout ce qui est dans la BDD cart, pour afficher tout le panier dans booking
+
+router.get("/", (req, res)=>{
+    Cart.find()
+    .populate("trip")
+    .then(data =>{
+        res.json({result : data})
+    })
+})
+
+
+//route pour effacer un voyage  du panier
+
+router.delete('/:id', (req, res) => {
+
+    Cart.deleteOne({_id : req.params.id}).then(()=>{
+        Cart.find().then(data =>{
+            res.json({remainingTrips : data})
+        })
+    })
+
+}
+);
+
+//route pour enlever tous les voyages du panier, quand on veut valider le panier
+router.delete("/",(req, res)=>{
+    Cart.deleteMany().then(()=>{
+        Cart.find().then(data =>{
+            res.json({trips : data})
+        })
+    })
     
 
-  
-
-// router.delete('/cart/:trip', (req, res) => {
-//     const SearchTrip = Cart.find( e.trip == req.params.trip)
-//     if (SearchTrip){
-//         Cart = Cart.filter(e => e.trip != req.params.trip)
-//         res.json ({result : true, Cart})
-//     }else{
-//         res.json ({result : false, error: "Trip no found"})
-
-    
-//     .catch(err =>{
-//     console.error(err);
-//     res.status(500).json({error: 'Erreur serveur'})
-//     });
-
-// }}
-// );
+})
 
 module.exports = router;
 
