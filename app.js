@@ -8,6 +8,7 @@ var logger = require('morgan');
 //const cors = require("cors")
 const moment = require("moment")
 var tripsRouter = require('./routes/trips');
+var cartRouter = require ("./routes/cart")
 
 var app = express();
 const cors = require ('cors')
@@ -20,5 +21,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors())
 
 app.use('/trips',tripsRouter);
+app.use("/cart", cartRouter)
 
 module.exports = app;
