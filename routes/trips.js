@@ -1,30 +1,19 @@
-/*var express = require('express');
-const mongoose = require('mongoose')
-//const { isValidObjectId } = require('mongoose');
-const Trip = require("../models/trips")
-const e = require('express');
-var router = express.Router(); router = express.Router();
+var express = require('express');
+var router = express.Router();
+
+const User = require("../models/trips") 
 
 
 
+router.get('/trips',(req,res)=>{
+    trips.find().then(allTrips =>
+    res.json({result: true, allTrips})
+    )}
+  )
 
-
-router.post('/trips', (req, res) => {
-    if(!req.body.departure || !req.body.arrival){
-      res.json ({result : false, error : "No trip found"});
-      return;}
-  });
-
-Trip.findOne({departure: req.body.departure, arrival : req.body.arrival})
-  .then( data =>{
-    if (data){
-      res.json({result : true})
-
-    }else{
-      res.json({result: false})
-    }
-  })
+  router.get('/trips'),(req,res)=>{
+    trips.find(req.body.departure)
   
+  }
 
-
-  module.exports = router;*/
+  module.exports = router;
