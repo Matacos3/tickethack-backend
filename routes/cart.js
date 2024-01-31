@@ -19,7 +19,7 @@ router.get('/:id', (req,res)=>{
         newCart.save().then(() =>{
             console.log("saved");
             Cart.find().then( data =>{
-                res.json({cart : data})
+                res.json({result : true, cart : data})
             })
         })
     }
@@ -33,7 +33,11 @@ router.get("/", (req, res)=>{
     Cart.find()
     .populate("trip")
     .then(data =>{
-        res.json({result : data})
+        if(data.length !== 0){
+            res.json({result : true, trips : data})
+        } else{
+            res.json({result : false, trips : "No trips in cart"})
+        }
     })
 })
 
