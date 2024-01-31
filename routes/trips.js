@@ -25,9 +25,6 @@ router.post('/',(req,res)=>{
     )
 })
 
-  router.get('/trips'),(req,res)=>{
-    trips.find(req.body.departure)
-  
-  }
+
 
   module.exports = router;
